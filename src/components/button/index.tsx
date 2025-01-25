@@ -1,20 +1,21 @@
-import './Button.css';
+import "./Button.css";
 
-interface ButtonProps{
-    label: string
-    onClick: () => void
-    color?: string
-    size?: string
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+  color?: string;
+  size?: string;
 }
 
-export const Button =({ label, onClick, color = 'blue', size = 'medium' }:ButtonProps)=> {
+export const Button = ({
+  label,
+  onClick,
+  color = "classic",
+  size = "medium",
+}: ButtonProps) => {
   return (
-    <button
-    
-      className={`btn btn-${color} btn-${size}`}
-      onClick={onClick}
-    >
+    <button className={`btn btn-${color} btn-${size}`} onClick={onClick}>
       {label}
     </button>
   );
-}
+};
