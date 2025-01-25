@@ -18,6 +18,15 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [favorites, setFavorites] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
@@ -57,6 +66,28 @@ const Home: React.FC = () => {
       setPage(page - 1);
       handleSearch();
     }
+  };
+
+  const addToFavorites = (movie: Movie) => {
+    setFavorites((prevFavorites) => {
+      const updatedFavorites = [...prevFavorites, movie];
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
+    });
+  };
+
+  const removeFromFavorites = (movieId: number) => {
+    setFavorites((prevFavorites) => {
+      const updatedFavorites = prevFavorites.filter(
+        (movie) => movie.id !== movieId
+      );
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
+    });
+  };
+
+  const isFavorite = (movieId: number) => {
+    return favorites.some((movie) => movie.id === movieId);
   };
 
   return (
@@ -120,6 +151,21 @@ const Home: React.FC = () => {
               <p style={{ margin: "0", color: "#666" }}>
                 Rating: {movie.vote_average}
               </p>
+              {isFavorite(movie.id) ? (
+                <Button
+                  label="Удалить из избранного"
+                  onClick={() => removeFromFavorites(movie.id)}
+                  color="red"
+                  size="small"
+                />
+              ) : (
+                <Button
+                  label="Добавить в избранное"
+                  onClick={() => addToFavorites(movie)}
+                  color="green"
+                  size="small"
+                />
+              )}
             </div>
           </div>
         ))}

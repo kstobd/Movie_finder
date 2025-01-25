@@ -120,11 +120,7 @@ const Popular: React.FC = () => {
       </div>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          label="Go Home"
-          onClick={() => navigate("/home")}
-          size="large"
-        />
+        <Button label="Go Home" onClick={() => navigate("/")} size="large" />
       </div>
     </div>
   );
