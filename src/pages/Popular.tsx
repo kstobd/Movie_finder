@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../components/button";
 import { useNavigate } from "react-router-dom";
 import { getPopularMovies } from "../api/api";
+import MovieCard from "../components/movieCard";
 
 interface Movie {
   id: number;
@@ -18,6 +19,14 @@ const Popular: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [favorites, setFavorites] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
 
   const fetchPopularMovies = async (page: number) => {
     setLoading(true);
@@ -49,6 +58,28 @@ const Popular: React.FC = () => {
     }
   };
 
+  const addToFavorites = (movie: Movie) => {
+    setFavorites((prevFavorites) => {
+      const updatedFavorites = [...prevFavorites, movie];
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
+    });
+  };
+
+  const removeFromFavorites = (movieId: number) => {
+    setFavorites((prevFavorites) => {
+      const updatedFavorites = prevFavorites.filter(
+        (movie) => movie.id !== movieId
+      );
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
+    });
+  };
+
+  const isFavorite = (movieId: number) => {
+    return favorites.some((movie) => movie.id === movieId);
+  };
+
   return (
     <div>
       <h1>Popular Page</h1>
@@ -64,33 +95,13 @@ const Popular: React.FC = () => {
         }}
       >
         {movies.map((movie) => (
-          <div
+          <MovieCard
             key={movie.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/500x750"
-              }
-              alt={movie.title}
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div style={{ padding: "10px" }}>
-              <h3 style={{ margin: "0 0 5px 0" }}>{movie.title}</h3>
-              <p style={{ margin: "0", color: "#666" }}>
-                {movie.release_date?.split("-")[0]}
-              </p>
-              <p style={{ margin: "0", color: "#666" }}>
-                Rating: {movie.vote_average}
-              </p>
-            </div>
-          </div>
+            movie={movie}
+            isFavorite={isFavorite(movie.id)}
+            onAddToFavorites={addToFavorites}
+            onRemoveFromFavorites={removeFromFavorites}
+          />
         ))}
       </div>
       <div

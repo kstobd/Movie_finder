@@ -1,6 +1,7 @@
 import "./Button.css";
 
 interface ButtonProps {
+  className?: string;
   label: string;
   onClick: () => void;
   color?: string;

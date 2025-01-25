@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../components/button";
 import { searchMovies } from "../api/api";
-// import styles from "./Home.module.css";
+import MovieCard from "../components/movieCard";
 
 interface Movie {
   id: number;
@@ -18,7 +18,6 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [favorites, setFavorites] = useState<Movie[]>([]);
 
   useEffect(() => {
@@ -57,14 +56,12 @@ const Home: React.FC = () => {
   const handleNextPage = () => {
     if (page < totalPages) {
       setPage(page + 1);
-      handleSearch();
     }
   };
 
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(page - 1);
-      handleSearch();
     }
   };
 
@@ -126,48 +123,13 @@ const Home: React.FC = () => {
         }}
       >
         {movies.map((movie) => (
-          <div
+          <MovieCard
             key={movie.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/500x750"
-              }
-              alt={movie.title}
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div style={{ padding: "10px" }}>
-              <h3 style={{ margin: "0 0 5px 0" }}>{movie.title}</h3>
-              <p style={{ margin: "0", color: "#666" }}>
-                {movie.release_date?.split("-")[0]}
-              </p>
-              <p style={{ margin: "0", color: "#666" }}>
-                Rating: {movie.vote_average}
-              </p>
-              {isFavorite(movie.id) ? (
-                <Button
-                  label="Удалить из избранного"
-                  onClick={() => removeFromFavorites(movie.id)}
-                  color="red"
-                  size="small"
-                />
-              ) : (
-                <Button
-                  label="Добавить в избранное"
-                  onClick={() => addToFavorites(movie)}
-                  color="green"
-                  size="small"
-                />
-              )}
-            </div>
-          </div>
+            movie={movie}
+            isFavorite={isFavorite(movie.id)}
+            onAddToFavorites={addToFavorites}
+            onRemoveFromFavorites={removeFromFavorites}
+          />
         ))}
       </div>
       <div

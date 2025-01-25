@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import MovieCard from "../components/movieCard";
 import { Button } from "../components/button";
 
 interface Movie {
@@ -29,9 +30,20 @@ const Favorites: React.FC = () => {
     });
   };
 
+  const clearFavorites = () => {
+    setFavorites([]);
+    localStorage.removeItem("favorites");
+  };
+
   return (
     <div>
       <h1>Избранное</h1>
+      <Button
+        label="Удалить все избранные"
+        onClick={clearFavorites}
+        color="red"
+        size="medium"
+      />
       <div
         style={{
           display: "grid",
@@ -41,39 +53,13 @@ const Favorites: React.FC = () => {
         }}
       >
         {favorites.map((movie) => (
-          <div
+          <MovieCard
             key={movie.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/500x750"
-              }
-              alt={movie.title}
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div style={{ padding: "10px" }}>
-              <h3 style={{ margin: "0 0 5px 0" }}>{movie.title}</h3>
-              <p style={{ margin: "0", color: "#666" }}>
-                {movie.release_date?.split("-")[0]}
-              </p>
-              <p style={{ margin: "0", color: "#666" }}>
-                Rating: {movie.vote_average}
-              </p>
-              <Button
-                label="Удалить из избранного"
-                onClick={() => removeFromFavorites(movie.id)}
-                color="red"
-                size="small"
-              />
-            </div>
-          </div>
+            movie={movie}
+            isFavorite={true}
+            onAddToFavorites={() => {}}
+            onRemoveFromFavorites={removeFromFavorites}
+          />
         ))}
       </div>
     </div>
