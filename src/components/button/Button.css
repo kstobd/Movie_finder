@@ -34,3 +34,8 @@
   font-size: 18px;
   padding: 15px 30px;
 }
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

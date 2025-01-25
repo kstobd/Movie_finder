@@ -15,7 +15,7 @@ export const Menu = () => {
     >
       <Button
         label="Главная"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
         color={""}
         size={""}
       />

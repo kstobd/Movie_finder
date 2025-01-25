@@ -13,7 +13,7 @@ function App() {
         <Menu />
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/popular" element={<Popular />} />

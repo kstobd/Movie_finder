@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../components/button";
 import { searchMovies } from "../api/api";
 // import styles from "./Home.module.css";
@@ -40,6 +40,10 @@ const Home: React.FC = () => {
       handleSearch();
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [page]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -127,11 +131,19 @@ const Home: React.FC = () => {
           marginTop: "20px",
         }}
       >
-        <Button label="Предыдущая страница" onClick={handlePrevPage} />
+        <Button
+          label="Предыдущая страница"
+          onClick={handlePrevPage}
+          disabled={page === 1}
+        />
         <span>
           Страница {page} из {totalPages}
         </span>
-        <Button label="Следующая страница" onClick={handleNextPage} />
+        <Button
+          label="Следующая страница"
+          onClick={handleNextPage}
+          disabled={page === totalPages}
+        />
       </div>
     </div>
   );
