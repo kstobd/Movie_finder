@@ -1,7 +1,6 @@
-// filepath: /Users/kst_obд/Учеба/МТУСИ/4 курс/UI UX/my_app/src/components/movieCard/index.tsx
 import React from "react";
 import { Button } from "../button";
-import "./MovieCard.css";
+import styles from "./MovieCard.module.css";
 
 interface Movie {
   id: number;
@@ -25,7 +24,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   onRemoveFromFavorites,
 }) => {
   return (
-    <div className="movie-card">
+    <div className={styles["movie-card"]}>
       <img
         src={
           movie.poster_path
@@ -33,16 +32,19 @@ const MovieCard: React.FC<MovieCardProps> = ({
             : `http://dummyimage.com/500x750&text=${movie.title}`
         }
         alt={movie.title}
+        className={styles["movie-card-image"]}
       />
-      <div className="movie-card-content">
-        <h3 className="movie-card-title">{movie.title}</h3>
-        <p className="movie-card-release-date">
+      <div className={styles["movie-card-content"]}>
+        <h3 className={styles["movie-card-title"]}>{movie.title}</h3>
+        <p className={styles["movie-card-release-date"]}>
           {movie.release_date?.split("-")[0]}
         </p>
-        <p className="movie-card-rating">Rating: {movie.vote_average}</p>
+        <p className={styles["movie-card-rating"]}>
+          Rating: {movie.vote_average}
+        </p>
         {isFavorite ? (
           <Button
-            className="movie-card-favorite-button"
+            className={styles["movie-card-favorite-button"]}
             label="Удалить из избранного"
             onClick={() => onRemoveFromFavorites(movie.id)}
             color="red"
@@ -50,7 +52,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
           />
         ) : (
           <Button
-            className="movie-card-favorite-button"
+            className={styles["movie-card-favorite-button"]}
             label="Добавить в избранное"
             onClick={() => onAddToFavorites(movie)}
             color="green"

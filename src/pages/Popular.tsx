@@ -82,8 +82,8 @@ const Popular: React.FC = () => {
 
   return (
     <div>
-      <h1>Popular Page</h1>
-      <p>These are the popular movies right now.</p>
+      <h1>Популярно сейчас!</h1>
+      <p>То, что смотрят сейчас больше всего</p>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       <div
@@ -114,8 +114,6 @@ const Popular: React.FC = () => {
         <Button
           label="Предыдущая страница"
           onClick={handlePrevPage}
-          color="blue"
-          size="medium"
           disabled={page === 1}
         />
         <span>
@@ -124,8 +122,6 @@ const Popular: React.FC = () => {
         <Button
           label="Следующая страница"
           onClick={handleNextPage}
-          color="blue"
-          size="medium"
           disabled={page === totalPages}
         />
       </div>

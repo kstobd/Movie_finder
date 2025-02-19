@@ -1,4 +1,4 @@
-import "./Button.css";
+import styles from "./Button.module.css";
 
 interface ButtonProps {
   className?: string;
@@ -18,7 +18,9 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`btn btn-${color} btn-${size}`}
+      className={`${styles[`btn-${color}`]} ${styles[`btn-${size}`]} ${
+        disabled ? styles["btn-disabled"] : ""
+      }`}
       onClick={onClick}
       disabled={disabled}
     >

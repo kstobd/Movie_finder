@@ -1,41 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../button";
+import styles from "./Menu.module.css";
 
 export const Menu = () => {
   const navigate = useNavigate();
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "70px",
-        borderBottom: "1px solid gray",
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
+    <div className={styles.menu}>
       <Button
         label="Главная"
         onClick={() => navigate("/")}
-        color={""}
-        size={""}
+        className={styles.menuButton}
+        size="large"
       />
       <Button
         label="Избранное"
         onClick={() => navigate("/favorites")}
-        color={""}
-        size={""}
+        className={styles.menuButton}
+        size="large"
       />
       <Button
         label="Смотрят сейчас"
         onClick={() => navigate("/popular")}
-        color={""}
-        size={""}
+        
+        className={styles.menuButton}
+        size="large"
       />
       <Button
         label="О нас"
         onClick={() => navigate("/about")}
-        color={""}
-        size={""}
+        className={styles.menuButton}
+        size="large"
       />
     </div>
   );

@@ -89,7 +89,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h2>Welcome to the Home Page!</h2>
+      <h2>Поиск фильма или сериала</h2>
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <input
           type="text"

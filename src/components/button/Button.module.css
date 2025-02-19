@@ -7,7 +7,7 @@
 }
 
 .btn-classic {
-  background-color: #a600a6;
+  background-color: #3f3f3f;
   color: white;
 }
 
@@ -40,7 +40,8 @@
   padding: 15px 30px;
 }
 
-.btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.btn-disabled {
+  background-color: #242424;
+  cursor: not-allowed !important;
+  color: #646262;
 }
